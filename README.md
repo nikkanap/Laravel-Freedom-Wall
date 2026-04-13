@@ -7,8 +7,13 @@ NOTE:
 - Make a copy of the .env.example file, rename it to .env, and add ur database credentials or else the project won't work
 - to run the app, cd to my-app and run in terminal ```php artisan serve``` and you can open the app at ```http://127.0.0.1:8000``` (it'll hopefully open our freedom board index)
 
-Pages Needing Fixing From PHP to Laravel, Blade:
+Finished Pages:
+- index.blade.php
 - login.blade.php
+- register.blade.php
+- thread.blade.php (simply the DisplayThread from the old register.php code)
+
+Pages Needing Fixing From PHP to Laravel, Blade:
 - logout.blade.php
 - post_message.blade.php
 - connection.blade.php (not sure about this one)
