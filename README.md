@@ -3,10 +3,11 @@ Assignment 7 for the Laravel version of the Freedom Wall
 
 ## Program Notes:
 - Install all necessary things such as composer and php.
-- Make sure u have the freedom_board table in ur mysql db.
-- Make a copy of the .env.example file, rename it to .env, manually create the database ```freedom_board``` and add ur database credentials or else the project won't work
+- U have to manually create the freedom_board table in ur mysql db.
+- Make a copy of the .env.example file, rename it to .env, and add ur database credentials or else the project won't work
 - connection.php implementation has to be done manually in Laravel, so before running the web application, please cd to my-app and run the following commands to create the users and posts tables in the freedom_board table:
 ```bash
+bash:
 php artisan make:migration create_users_table
 php artisan make:migration create_posts_table
 ```
@@ -34,6 +35,7 @@ php artisan make:migration create_posts_table
 - ```app/Http/Controllers```: specifically ```FreedomWallController.php```. This file is where we put all out functions that are called in web.php for example:
 Inside FreedomWallController.php:
 ```php
+php:
 class FreedomWallController extends Controller
 {
   public function index() {
@@ -52,6 +54,7 @@ class FreedomWallController extends Controller
 
 And inside of web.php:
 ```php
+php:
 Route::get('/', [FreedomWallController::class, 'index']); <-index here is a function inside of FreedomWallController.php
 
 Route::get('/register', [FreedomWallController::class, 'showRegister']); <- same here with showRegister
