@@ -25,7 +25,10 @@
             <h1 style="margin-bottom: 13px">AENS Freedom Board</h1>
             <div style="display:flex; align-items:center; gap:12px;">
                 <span class="username">Logged in as <strong>{{ $username }}</strong></span>
-                <a id="logout" href="{{ url('/logout') }}">Logout</a>
+                <form method="POST" action="/logout">
+                    @csrf
+                    <button id="logout" type="submit">Logout</button>
+                </form>
             </div>
         </header>
         

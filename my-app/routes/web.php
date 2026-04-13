@@ -15,10 +15,7 @@ Route::get('/login', [FreedomWallController::class, 'showLogin']);
 
 Route::post('/login', [FreedomWallController::class, 'login']);
 
-
-Route::get('/logout', function () {
-    return 'logout here';
-});
+Route::post('/logout', [FreedomWallController::class, 'logout']);
 
 Route::post('/post-message', function () {
     return 'save message here';
