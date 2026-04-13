@@ -4,8 +4,16 @@ Assignment 7 for the Laravel version of the Freedom Wall
 NOTE:
 - Install all necessary things such as composer and php.
 - Make sure u have the freedom_board table in ur mysql db.
-- Make a copy of the .env.example file, rename it to .env, and add ur database credentials or else the project won't work
-- to run the app, cd to my-app and run in terminal ```php artisan serve``` and you can open the app at ```http://127.0.0.1:8000``` (it'll hopefully open our freedom board index)
+- Make a copy of the .env.example file, rename it to .env, manually create the database ```freedom_board``` and add ur database credentials or else the project won't work
+- connection.php implementation has to be done manually in Laravel, so before running the web application, please cd to my-app and run the following commands to create the users and posts tables in the freedom_board table:
+```
+php artisan make:migration create_users_table
+php artisan make:migration create_posts_table
+```
+
+- To run the app, cd to my-app and run in terminal ```php artisan serve``` and you can open the app at ```http://127.0.0.1:8000``` (it'll hopefully open our freedom board index)
+- to run the
+
 
 Finished Pages:
 - index.blade.php
@@ -13,6 +21,7 @@ Finished Pages:
 - register.blade.php
 - thread.blade.php (simply the DisplayThread from the old register.php code)
 - logout (not in blade.php but inside of FreedomWallController.php since it has no frontend)
+- connection (not in blade.php but is configured through ```.env``` and instead added to php files in database/migrations)
 
 Pages Needing Fixing From PHP to Laravel, Blade:
 - post_message.blade.php
@@ -49,6 +58,5 @@ Route::get('/register', [FreedomWallController::class, 'showRegister']); <- same
 
 Route::post('/register', [FreedomWallController::class, 'register']); <- and register
 ```
-
 
 
