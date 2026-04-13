@@ -11,9 +11,10 @@ Route::get('/register', [FreedomWallController::class, 'showRegister']);
 Route::post('/register', [FreedomWallController::class, 'register']);
 
 //needs working
-Route::get('/login', function () {
-    return 'login page';
-});
+Route::get('/login', [FreedomWallController::class, 'showLogin']);
+
+Route::post('/login', [FreedomWallController::class, 'login']);
+
 
 Route::get('/logout', function () {
     return 'logout here';
