@@ -24,7 +24,7 @@
         <header style="flex-direction: row">
             <h1 style="margin-bottom: 13px">AENS Freedom Board</h1>
             <div style="display:flex; align-items:center; gap:12px;">
-                <span class="username">Logged in as <strong>{{ username }}</strong></span>
+                <span class="username">Logged in as <strong>{{ $username }}</strong></span>
                 <a id="logout" href="{{ url('/logout') }}">Logout</a>
             </div>
         </header>
@@ -49,7 +49,8 @@
             'post' => $reply,
             'replies' => $replies,
             'isLoggedIn' => $isLoggedIn,
-            'sessionUserId' => $sessionUserId
+            'sessionUserId' => $sessionUserId,
+            'username' => $username
         ])   
     @endforeach
 
