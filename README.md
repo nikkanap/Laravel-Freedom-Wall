@@ -12,9 +12,9 @@ Finished Pages:
 - login.blade.php
 - register.blade.php
 - thread.blade.php (simply the DisplayThread from the old register.php code)
+- logout (not in blade.php but inside of FreedomWallController.php since it has no frontend)
 
 Pages Needing Fixing From PHP to Laravel, Blade:
-- logout.blade.php
 - post_message.blade.php
 - connection.blade.php (not sure about this one)
 - delete_post.blade.php
