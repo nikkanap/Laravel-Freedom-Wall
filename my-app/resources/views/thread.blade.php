@@ -1,3 +1,4 @@
+{{-- this is an extra file for the DisplayThread from the old register.php file --}}
 <div class='reply'>
     <div class='post-row'>
         @if ($post->deleted) 
