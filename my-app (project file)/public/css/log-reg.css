@@ -1,0 +1,110 @@
+body { 
+    font-family: Arial, sans-serif;  
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error {
+    font-size: 13px;
+    color: #c0392b;
+}
+
+/* Card wrapper */
+#main-container {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+    padding: 2.25rem 2rem;
+    width: 100%;
+    max-width: 380px;
+}
+
+/* Header text */
+#card-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4CAF50;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+#card-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 4px;
+}
+#card-sub {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 1.75rem;
+}
+
+/* Fields */
+#field { margin-bottom: 1rem; }
+#field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 6px;
+    letter-spacing: 0.03em;
+}
+
+#field input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    margin: 10px 0; 
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#field input:focus { border-color: #4CAF50; }
+
+/* Submit button */
+#btn-submit {
+  width: 100%;
+  padding: 11px;
+  background: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+#btn-submit:hover { background: #2E7D32; }
+
+/* Footer links */
+#card-footer {
+  margin-top: 1.25rem;
+  font-size: 13px;
+  color: #888;
+  text-align: center;
+}
+
+#card-footer a { 
+    color: #4CAF50; 
+    text-decoration: none; 
+    font-weight: 500; 
+}
+
+#card-footer a:hover { text-decoration: underline; }
+
+#home-link {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  color: #aaa;
+  text-decoration: none;
+  margin-top: 0.75rem;
+}
+
+#home-link:hover { color: #555; }
