@@ -65,4 +65,4 @@ Route::post('/register', [FreedomWallController::class, 'register']); <- and reg
 - fixed post_message.blade.php (still needs: delete, and reply thread)
 - deleted connection.blade.php
 - deleted thread.blade.php 
-
+- added PostController.php (handles saving posts)
