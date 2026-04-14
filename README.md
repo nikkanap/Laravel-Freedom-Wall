@@ -61,5 +61,8 @@ Route::get('/register', [FreedomWallController::class, 'showRegister']); <- same
 
 Route::post('/register', [FreedomWallController::class, 'register']); <- and register
 ```
-
+[Elizah] - April 15
+- fixed post_message.blade.php (still needs: delete, and reply thread)
+- deleted connection.blade.php
+- deleted thread.blade.php 
 
