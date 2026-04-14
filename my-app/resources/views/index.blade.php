@@ -9,7 +9,6 @@
 </head>
 <body>
 
-{{-- ================= HEADER (MATCHES OLD PHP STRUCTURE) ================= --}}
 @if(!$isLoggedIn)
     <header>
         <h1>AENS Freedom Board</h1>
@@ -26,7 +25,6 @@
 @else
     <header style="flex-direction: row">
         <h1 style="margin-bottom: 13px">
-            <!-- ✅ HOME BUTTON (like old system: clicking title goes home) -->
             <a href="{{ url('/') }}" style="text-decoration:none; color:inherit;">
                 AENS Freedom Board
             </a>
@@ -37,7 +35,6 @@
                 Logged in as <strong>{{ $username }}</strong>
             </span>
 
-            <!-- Logout (Laravel POST but same UI style) -->
             <a href="#"
                id="logout"
                onclick="document.getElementById('logout-form').submit(); return false;">
@@ -62,7 +59,6 @@
     <h2>Recent Messages</h2>
 @endif
 
-{{-- ================= POSTS (FLAT ONLY, NO REPLIES) ================= --}}
 @if(empty($topPosts))
     <p class="empty-state">No messages yet. Be the first to post!</p>
 @endif
@@ -91,7 +87,6 @@
     </div>
 @endforeach
 
-{{-- ================= PAGINATION ================= --}}
 <div class="pagination">
     @if($page > 1)
         <a href="{{ url('/?page=' . ($page - 1)) }}" class="button">Previous</a>

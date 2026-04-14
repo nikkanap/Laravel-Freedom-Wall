@@ -14,8 +14,7 @@ class FreedomWallController extends Controller
         $postsPerPage = 10;
         $page = request()->get('page', 1);
         $offset = ($page - 1) * $postsPerPage;
-
-        // ✅ FETCH POSTS + USERNAME (FIXED LIKE PHP VERSION)
+        
         $posts = DB::table('posts as p')
             ->join('users as u', 'p.user_id', '=', 'u.id')
             ->select(
@@ -31,15 +30,12 @@ class FreedomWallController extends Controller
             ->offset($offset)
             ->get();
 
-        // ✅ MAIN POSTS (NO parent_id)
         $topPosts = $posts->whereNull('parent_id');
 
-        // ✅ REPLIES GROUPED BY parent_id
         $replies = $posts
             ->whereNotNull('parent_id')
             ->groupBy('parent_id');
 
-        // ✅ PAGINATION (LIKE ORIGINAL PHP)
         $totalPosts = DB::table('posts')->count();
         $totalPages = ceil($totalPosts / $postsPerPage);
 
