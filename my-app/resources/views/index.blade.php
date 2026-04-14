@@ -3,77 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <title>AENS Freedom Board</title>
+
     <link rel="stylesheet" href="{{ asset('css/index.css') }}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-    @if (!$isLoggedIn) 
-        <header>
-            <h1>AENS Freedom Board</h1>
-            <p>Freely express your mind.</p>
-        </header>
-        
-        <section class="onboarding">
-            <a class="btn-onboard" href="{{ url('/register') }}">Register</a>
-            <a class="btn-onboard" href="{{ url('/login') }}">Login</a>
-        </section>
+{{-- ================= HEADER (MATCHES OLD PHP STRUCTURE) ================= --}}
+@if(!$isLoggedIn)
+    <header>
+        <h1>AENS Freedom Board</h1>
+        <p>Freely express your mind.</p>
+    </header>
 
-        <h2>Recent Messages</h2>
-    @else 
-        <header style="flex-direction: row">
-            <h1 style="margin-bottom: 13px">AENS Freedom Board</h1>
-            <div style="display:flex; align-items:center; gap:12px;">
-                <span class="username">Logged in as <strong>{{ $username }}</strong></span>
-                <form method="POST" action="/logout">
-                    @csrf
-                    <button id="logout" type="submit">Logout</button>
-                </form>
-            </div>
-        </header>
-        
-        <form class="post-form" action="{{ url('/post_message') }}" method="POST">
-            @csrf
-            <textarea placeholder="Write a message..." required name="message"></textarea>
-            <div class="post-form-footer">
-                <button type="submit" name="submit" value="submit">Post to Board</button>
-            </div>
-        </form>
+    <section class="onboarding">
+        <a class="btn-onboard" href="{{ url('/register') }}">Register</a>
+        <a class="btn-onboard" href="{{ url('/login') }}">Login</a>
+    </section>
 
-        <h2>Recent Messages</h2>
-    @endif
+    <h2>Recent Messages</h2>
 
-    @if (empty($topPosts))
-        <p class="empty-state">No messages yet. Be the first to post!</p>
-    @endif
+@else
+    <header style="flex-direction: row">
+        <h1 style="margin-bottom: 13px">
+            <!-- ✅ HOME BUTTON (like old system: clicking title goes home) -->
+            <a href="{{ url('/') }}" style="text-decoration:none; color:inherit;">
+                AENS Freedom Board
+            </a>
+        </h1>
 
-    @foreach ($topPosts as $post)
-        @include('partials.thread', [
-            'post' => $reply,
-            'replies' => $replies,
-            'isLoggedIn' => $isLoggedIn,
-            'sessionUserId' => $sessionUserId,
-            'username' => $username
-        ])   
-    @endforeach
+        <div style="display:flex; align-items:center; gap:12px;">
+            <span class="username">
+                Logged in as <strong>{{ $username }}</strong>
+            </span>
 
-    <div class="pagination">
-        @if ($page > 1)
-            <a href="{{ url('/?page=' . ($page - 1)) }}" class="button">Previous</a>
-        @endif
+            <!-- Logout (Laravel POST but same UI style) -->
+            <a href="#"
+               id="logout"
+               onclick="document.getElementById('logout-form').submit(); return false;">
+                Logout
+            </a>
 
-        @if ($page < $totalPages)
-            <a href="{{ url('/?page=' . ($page + 1)) }}" class="button">Next</a>
-        @endif
+            <form id="logout-form" action="/logout" method="POST" style="display:none;">
+                @csrf
+            </form>
+        </div>
+    </header>
+
+    <form class="post-form" action="{{ url('/post_message') }}" method="POST">
+        @csrf
+        <textarea placeholder="Write a message..." required name="message"></textarea>
+
+        <div class="post-form-footer">
+            <button type="submit">Post to Board</button>
+        </div>
+    </form>
+
+    <h2>Recent Messages</h2>
+@endif
+
+{{-- ================= POSTS (FLAT ONLY, NO REPLIES) ================= --}}
+@if(empty($topPosts))
+    <p class="empty-state">No messages yet. Be the first to post!</p>
+@endif
+
+@foreach($topPosts as $post)
+    <div class="reply">
+        <div class="post-row">
+
+            @if($post->deleted)
+                <em>[deleted]</em>
+            @else
+                <strong>{{ $post->username }}</strong>: {{ $post->content }}
+
+                @if($isLoggedIn)
+                    <a href="#" class="reply-btn">Reply</a>
+                @endif
+
+                @if($isLoggedIn && $sessionUserId == $post->user_id)
+                    <a href="{{ url('/delete-post/' . $post->id) }}" class="delete-btn">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                @endif
+            @endif
+
+        </div>
     </div>
+@endforeach
 
+{{-- ================= PAGINATION ================= --}}
+<div class="pagination">
+    @if($page > 1)
+        <a href="{{ url('/?page=' . ($page - 1)) }}" class="button">Previous</a>
+    @endif
 
-    <script>
-        function toggleReply(postId) {
-            var form = document.getElementById('reply-form-' + postId);
-            form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        }
-    </script>
+    @if($page < $totalPages)
+        <a href="{{ url('/?page=' . ($page + 1)) }}" class="button">Next</a>
+    @endif
+</div>
 
 </body>
 </html>

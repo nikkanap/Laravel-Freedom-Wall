@@ -9,33 +9,66 @@ use Illuminate\Support\Facades\Hash;
 
 class FreedomWallController extends Controller
 {
-    public function index() {
-        $topPosts = [];
-        $replies = [];
-        $page = 1;
-        $totalPages = 1;
+    public function index()
+    {
+        $postsPerPage = 10;
+        $page = request()->get('page', 1);
+        $offset = ($page - 1) * $postsPerPage;
+
+        // ✅ FETCH POSTS + USERNAME (FIXED LIKE PHP VERSION)
+        $posts = DB::table('posts as p')
+            ->join('users as u', 'p.user_id', '=', 'u.id')
+            ->select(
+                'p.id',
+                'p.user_id',
+                'p.content',
+                'p.parent_id',
+                'p.deleted',
+                'u.username'
+            )
+            ->orderBy('p.id', 'desc')
+            ->limit($postsPerPage)
+            ->offset($offset)
+            ->get();
+
+        // ✅ MAIN POSTS (NO parent_id)
+        $topPosts = $posts->whereNull('parent_id');
+
+        // ✅ REPLIES GROUPED BY parent_id
+        $replies = $posts
+            ->whereNotNull('parent_id')
+            ->groupBy('parent_id');
+
+        // ✅ PAGINATION (LIKE ORIGINAL PHP)
+        $totalPosts = DB::table('posts')->count();
+        $totalPages = ceil($totalPosts / $postsPerPage);
 
         return view('index', [
             'topPosts' => $topPosts,
             'replies' => $replies,
             'page' => $page,
             'totalPages' => $totalPages,
-            'isLoggedIn' => Auth::check(), 
+
+            // auth info
+            'isLoggedIn' => Auth::check(),
             'sessionUserId' => Auth::id(),
             'username' => Auth::user()?->username,
         ]);
     }
 
-    public function showRegister() {
+    public function showRegister()
+    {
         return view('register');
     }
 
-    public function showLogin() {
+    public function showLogin()
+    {
         return view('login');
     }
 
-    public function register(Request $request) {
-        if(Auth::check()) {
+    public function register(Request $request)
+    {
+        if (Auth::check()) {
             return redirect('/');
         }
 
@@ -45,7 +78,7 @@ class FreedomWallController extends Controller
         ]);
 
         try {
-            DB::table('users')->insertGetId([
+            DB::table('users')->insert([
                 'username' => $request->username,
                 'password' => Hash::make($request->password)
             ]);
@@ -58,8 +91,9 @@ class FreedomWallController extends Controller
         }
     }
 
-    public function login(Request $request) {
-        if(Auth::check()) {
+    public function login(Request $request)
+    {
+        if (Auth::check()) {
             return redirect('/');
         }
 
@@ -68,10 +102,10 @@ class FreedomWallController extends Controller
             'password' => 'required'
         ]);
 
-        try{
+        try {
             $user = DB::table('users')
-            ->where('username', $request->username)
-            ->first();
+                ->where('username', $request->username)
+                ->first();
 
             if ($user && Hash::check($request->password, $user->password)) {
                 Auth::loginUsingId($user->id);
@@ -81,6 +115,7 @@ class FreedomWallController extends Controller
             return back()->withErrors([
                 'login' => 'Invalid username or password.'
             ])->withInput();
+
         } catch (\Exception $e) {
             return back()->withErrors([
                 'login' => 'Something went wrong. Please try again.'
@@ -88,7 +123,8 @@ class FreedomWallController extends Controller
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
         return redirect('/login');
     }
