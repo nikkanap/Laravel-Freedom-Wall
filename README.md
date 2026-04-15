@@ -66,3 +66,9 @@ Route::post('/register', [FreedomWallController::class, 'register']); <- and reg
 - deleted connection.blade.php
 - deleted thread.blade.php 
 - added PostController.php (handles saving posts)
+
+[Euge] - April 15
+- added post model w/recursive reply
+- created partials/reply.blade.php for nested replies
+- added sessions table migration
+- added destroy() method sa post controller 

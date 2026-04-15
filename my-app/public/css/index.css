@@ -8,9 +8,19 @@ body {
 /* Post form/div */
 .delete-btn {
 	margin-left: auto;
-	color: #e53935;
+	color: #e53935 !important;
 	text-decoration: none;
 	font-size: 13px;
+	background: none !important;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	float: right;
+}
+
+
+.thread .post-row {
+    margin-right: -30px;
 }
 
 .meta { 
@@ -33,7 +43,7 @@ textarea[name="message"]{
 
 .thread {
 	margin-left: 30px;
-    border-left: 3px solid #000000;
+    border-left: 2px solid #000000;
     padding-left: 12px;
 	padding-right: 8px;
     margin-top: 5px;

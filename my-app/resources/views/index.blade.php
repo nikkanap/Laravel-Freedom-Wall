@@ -59,41 +59,63 @@
     <h2>Recent Messages</h2>
 @endif
 
-@if(empty($topPosts))
-    <p class="empty-state">No messages yet. Be the first to post!</p>
-@endif
-
-@foreach($topPosts as $post)
+@forelse($posts as $post)
     <div class="reply">
         <div class="post-row">
-
             @if($post->deleted)
                 <em>[deleted]</em>
             @else
-                <strong>{{ $post->username }}</strong>: {{ $post->content }}
+                <strong>{{ $post->user->username }}</strong>: {{ $post->content }}
 
                 @if($isLoggedIn)
-                    <a href="#" class="reply-btn">Reply</a>
+                    <a href="#" class="reply-btn"
+                       onclick="var f = document.getElementById('reply-form-{{ $post->id }}');
+                                f.style.display = f.style.display === 'none' ? 'block' : 'none';
+                                return false;">
+                        Reply
+                    </a>
                 @endif
 
                 @if($isLoggedIn && $sessionUserId == $post->user_id)
-                    <a href="{{ url('/delete-post/' . $post->id) }}" class="delete-btn">
-                        <i class="fa fa-trash"></i>
-                    </a>
+                    <form action="{{ url('/delete-post/' . $post->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="delete-btn" onclick="return confirm('Delete this post?')">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </form>
                 @endif
             @endif
-
         </div>
+
+        @if($isLoggedIn && !$post->deleted)
+            <div id="reply-form-{{ $post->id }}" style="display:none; margin-top:8px;">
+                <form action="{{ url('/post_message') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="parent_id" value="{{ $post->id }}">
+                    <textarea name="message" placeholder="Write a reply..." required
+                              style="width:100%; height:50px; font-size:13px;"></textarea>
+                    <button type="submit" style="margin-top:4px;">Reply</button>
+                </form>
+            </div>
+        @endif
+
+        {{-- Threaded replies (recursive) --}}
+        @if($post->replies->count() > 0)
+            @include('partials.reply', ['replies' => $post->replies])
+        @endif
     </div>
-@endforeach
+@empty
+    <p class="empty-state">No messages yet. Be the first to post!</p>
+@endforelse
 
 <div class="pagination">
-    @if($page > 1)
-        <a href="{{ url('/?page=' . ($page - 1)) }}" class="button">Previous</a>
+    @if($posts->previousPageUrl())
+        <a href="{{ $posts->previousPageUrl() }}" class="btn-onboard">Previous</a>
     @endif
 
-    @if($page < $totalPages)
-        <a href="{{ url('/?page=' . ($page + 1)) }}" class="button">Next</a>
+    @if($posts->nextPageUrl())
+        <a href="{{ $posts->nextPageUrl() }}" class="btn-onboard">Next</a>
     @endif
 </div>
 

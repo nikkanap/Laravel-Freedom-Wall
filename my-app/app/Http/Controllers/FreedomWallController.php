@@ -11,41 +11,13 @@ class FreedomWallController extends Controller
 {
     public function index()
     {
-        $postsPerPage = 10;
-        $page = request()->get('page', 1);
-        $offset = ($page - 1) * $postsPerPage;
-        
-        $posts = DB::table('posts as p')
-            ->join('users as u', 'p.user_id', '=', 'u.id')
-            ->select(
-                'p.id',
-                'p.user_id',
-                'p.content',
-                'p.parent_id',
-                'p.deleted',
-                'u.username'
-            )
-            ->orderBy('p.id', 'desc')
-            ->limit($postsPerPage)
-            ->offset($offset)
-            ->get();
-
-        $topPosts = $posts->whereNull('parent_id');
-
-        $replies = $posts
-            ->whereNotNull('parent_id')
-            ->groupBy('parent_id');
-
-        $totalPosts = DB::table('posts')->count();
-        $totalPages = ceil($totalPosts / $postsPerPage);
+        $posts = \App\Models\Post::with(['user', 'replies.user'])
+            ->whereNull('parent_id')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
 
         return view('index', [
-            'topPosts' => $topPosts,
-            'replies' => $replies,
-            'page' => $page,
-            'totalPages' => $totalPages,
-
-            // auth info
+            'posts' => $posts,
             'isLoggedIn' => Auth::check(),
             'sessionUserId' => Auth::id(),
             'username' => Auth::user()?->username,

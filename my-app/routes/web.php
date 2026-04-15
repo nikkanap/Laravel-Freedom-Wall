@@ -17,10 +17,4 @@ Route::post('/logout', [FreedomWallController::class, 'logout']);
 Route::post('/post_message', [PostController::class, 'store']);
 
 
-Route::post('/post-message', function () {
-    return 'save message here';
-});
-
-Route::get('/delete-post/{id}', function ($id) {
-    return 'delete post ' . $id;
-});
+Route::delete('/delete-post/{id}', [PostController::class, 'destroy']);
