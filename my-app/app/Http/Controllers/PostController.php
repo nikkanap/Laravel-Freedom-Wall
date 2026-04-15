@@ -27,4 +27,24 @@ class PostController extends Controller
 
         return redirect('/');
     }
+
+    public function destroy($id)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        $post = \App\Models\Post::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if ($post) {
+            $post->update([
+                'deleted' => true,
+                'content' => '',
+            ]);
+        }
+
+        return redirect('/');
+    }
 }
