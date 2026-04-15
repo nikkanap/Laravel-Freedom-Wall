@@ -6,11 +6,25 @@ Assignment 7 for the Laravel version of the Freedom Wall
 - U have to manually create the freedom_board table in ur mysql db.
 - Make a copy of the .env.example file, rename it to .env, and add ur database credentials or else the project won't work
 - connection.php implementation has to be done manually in Laravel, so before running the web application, please cd to my-app and run the following commands to create the users and posts tables in the freedom_board table:
+
+Run:
+- composer install          # Install dependencies
+- php artisan key:generate  # Generate the APP_KEY in .env
+
 ```bash
 bash:
 php artisan make:migration create_users_table
 php artisan make:migration create_posts_table
 ```
+
+Upon success:
+```zsh
+   INFO  Migration [database/migrations/2026_04_14_012027_create_users_table.php] created successfully.  
+
+
+   INFO  Migration [database/migrations/2026_04_14_012027_create_posts_table.php] created successfully.  
+```
+
 - To run the app, cd to my-app and run in terminal ```php artisan serve``` and you can open the app at ```http://127.0.0.1:8000``` (it'll hopefully open our freedom board index)
 
 ## Progress:

@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "nanaputo22503";
+$password = "nanaputo22503"; // Remember to empty this slot (pass slot)
 
 /*
     Establish connection with local MySQL db

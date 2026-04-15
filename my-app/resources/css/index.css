@@ -121,7 +121,7 @@ h2 { /* Recent msgs header */
 
 #logout {
 	font-size: 13px;
-	color: #888;
+	color: white;
 	text-decoration: none;
 	border: 1px solid #e0e0e0;
 	padding: 5px 12px;
@@ -132,7 +132,7 @@ h2 { /* Recent msgs header */
 
 #logout:hover {
 	border-color: #bbb;
-	color: #444;
+	color: white;
 }
 
 /* Compose box */

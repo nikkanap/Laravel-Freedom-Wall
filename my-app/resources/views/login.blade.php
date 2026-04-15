@@ -27,7 +27,8 @@
         </form>
 
         <p id="card-footer">Don't have an account? <a href="{{ url('/register') }}">Register here</a></p>
-        <a id="home-link" href="{{ url('/index') }}">Home</a>
+        <!-- Replaced /index with /, wrong path -->
+        <a id="home-link" href="{{ url('/') }}">Home</a>
     </div>
 </body>
 </html>

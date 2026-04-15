@@ -32,7 +32,7 @@
             </div>
         </header>
         
-        <form class="post-form" action="{{ url('/post_message') }}" method="POST">
+        <form class="post-form" action="{{ url('/post-message') }}" method="POST">
             @csrf
             <textarea placeholder="Write a message..." required name="message"></textarea>
             <div class="post-form-footer">

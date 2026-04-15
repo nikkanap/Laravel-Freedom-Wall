@@ -92,4 +92,34 @@ class FreedomWallController extends Controller
         Auth::logout();
         return redirect('/login');
     }
+
+    public function postMessage(Request $request) {
+        // Check if user is authenticated
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        // Validate request
+        $request->validate([
+            'message' => 'required|string|max:255',
+            'parent_id' => 'nullable|integer|exists:posts,id'
+        ]);
+
+        try {
+            // Insert the post
+            DB::table('posts')->insert([
+                'user_id' => Auth::id(),
+                'content' => $request->message,
+                'parent_id' => $request->parent_id ?? null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            return redirect('/');
+        } catch (\Exception $e) {
+            return back()->withErrors([
+                'message' => 'Failed to post message. Please try again.'
+            ])->withInput();
+        }
+    }
 }

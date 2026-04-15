@@ -26,6 +26,6 @@
             </form>
 
         <p id="card-footer">Already have an account? <a href="{{ url('/login') }}">Log in here</a></p>
-        <a id="home-link" href="{{ url('/index') }}">Home</a>
+        <a id="home-link" href="{{ url('/') }}">Home</a>
     </body>
 </html>

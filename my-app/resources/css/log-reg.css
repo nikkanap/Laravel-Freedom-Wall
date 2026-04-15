@@ -108,3 +108,7 @@ body {
 }
 
 #home-link:hover { color: #555; }
+
+button#logout {
+    color: white;
+}
