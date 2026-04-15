@@ -27,7 +27,6 @@
             @endif
         </div>
 
-        {{-- Reply form --}}
         @if($isLoggedIn && !$reply->deleted)
             <div id="reply-form-{{ $reply->id }}" style="display:none; margin-top:4px;">
                 <form action="{{ url('/post_message') }}" method="POST">
@@ -40,7 +39,6 @@
             </div>
         @endif
 
-        {{-- Recursion: if this reply has its own replies, include myself again --}}
         @if($reply->replies->count() > 0)
             @include('partials.reply', ['replies' => $reply->replies])
         @endif

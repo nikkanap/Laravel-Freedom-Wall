@@ -71,4 +71,7 @@ Route::post('/register', [FreedomWallController::class, 'register']); <- and reg
 - added post model w/recursive reply
 - created partials/reply.blade.php for nested replies
 - added sessions table migration
-- added destroy() method sa post controller 
+- added destroy() method sa PostController for soft delete
+- added DELETE route
+- updated index.blade.php with reply forms, threaded replies, and delete buttons (green na sha)
+- 

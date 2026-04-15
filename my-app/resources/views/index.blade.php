@@ -100,7 +100,6 @@
             </div>
         @endif
 
-        {{-- Threaded replies (recursive) --}}
         @if($post->replies->count() > 0)
             @include('partials.reply', ['replies' => $post->replies])
         @endif

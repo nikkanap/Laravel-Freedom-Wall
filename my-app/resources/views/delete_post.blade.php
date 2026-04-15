@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 if (isset($_GET['id'])) {
     $post_id = $_GET['id'];
 
-    // Soft delete instead of removing row
+    // soft delete instead of removing row
     $stmt = $conn->prepare("
         UPDATE posts 
         SET deleted = 1, content = '' 
